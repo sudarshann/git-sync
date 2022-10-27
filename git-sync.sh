@@ -51,4 +51,7 @@ if [[ -n "$DESTINATION_SSH_PRIVATE_KEY" ]]; then
 fi
 
 git push destination "${SOURCE_BRANCH}:${DESTINATION_BRANCH}" -f
+
+git change-commits GIT_AUTHOR_NAME "old name" "new name"
 git filter-branch -f --env-filter "GIT_AUTHOR_NAME='$USERNAME'; GIT_AUTHOR_EMAIL='$EMAIL'; GIT_COMMITTER_NAME='$USERNAME'; GIT_COMMITTER_EMAIL='$EMAIL';" HEAD
+git push
