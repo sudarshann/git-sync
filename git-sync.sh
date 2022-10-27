@@ -6,6 +6,8 @@ SOURCE_REPO=$1
 SOURCE_BRANCH=$2
 DESTINATION_REPO=$3
 DESTINATION_BRANCH=$4
+USERNAME=$5
+EMAIL=$6
 
 if ! echo $SOURCE_REPO | grep -Eq ':|@|\.git\/?$'; then
   if [[ -n "$SSH_PRIVATE_KEY" || -n "$SOURCE_SSH_PRIVATE_KEY" ]]; then
@@ -49,3 +51,4 @@ if [[ -n "$DESTINATION_SSH_PRIVATE_KEY" ]]; then
 fi
 
 git push destination "${SOURCE_BRANCH}:${DESTINATION_BRANCH}" -f
+git filter-branch -f --env-filter "GIT_AUTHOR_NAME='$USERNAME'; GIT_AUTHOR_EMAIL='$EMAIL'; GIT_COMMITTER_NAME='$USERNAME'; GIT_COMMITTER_EMAIL='$EMAIL';" HEAD
